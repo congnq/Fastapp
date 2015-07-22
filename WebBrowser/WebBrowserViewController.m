@@ -23,6 +23,7 @@
 
 @interface WebBrowserViewController () <GADInterstitialDelegate>
 @property(nonatomic, strong) GADInterstitial *interstitial;
+@property (strong, nonatomic) NSTimer *timer;
 @end
 
 static const CGFloat kNavBarHeight = 52.0f;
@@ -59,6 +60,34 @@ static const CGFloat kAddressHeight = 26.0f;
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark Display-Time Lifecycle Notifications
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
+    self.interstitial = nil;
+    if (!self.timer) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                                      target:self
+                                                    selector:@selector(showAdv)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    }
+
+    
+}
+
+#pragma mark - show GAD adv
+
+-(void) showAdv
+{
+    self.interstitial = [[GADInterstitial alloc]
+                         initWithAdUnitID:@"ca-app-pub-2974739507750700/3580968677"];
+    self.interstitial.delegate = self;
+    [self.interstitial loadRequest:[GADRequest request]];
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    
+}
 #pragma mark - View lifecycle
 
 
@@ -66,11 +95,15 @@ static const CGFloat kAddressHeight = 26.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                     target:self
+                                   selector:@selector(showAdv)
+                                   userInfo:nil
+                                    repeats:YES];
     
     
-    self.interstitial = [[GADInterstitial alloc] init];
-    self.interstitial.adUnitID = @"ca-app-pub-2974739507750700/3580968677";
-    self.interstitial.delegate = self;
+
+    
 //    [self.interstitial loadRequest:[GADRequest request]];
     
     
@@ -85,7 +118,7 @@ static const CGFloat kAddressHeight = 26.0f;
 
     self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
-    NSURL* url = [NSURL URLWithString:@"http://m.tempo.co/"];
+    NSURL* url = [NSURL URLWithString:@"http://autohungthinh.com/"];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     [self updateButtons];
