@@ -20,7 +20,7 @@
 
 #import "WebBrowserViewController.h"
 #import <GoogleMobileAds/GoogleMobileAds.h>
-
+#define PopupTime 10.0
 @interface WebBrowserViewController () <GADInterstitialDelegate>
 @property(nonatomic, strong) GADInterstitial *interstitial;
 @property (strong, nonatomic) NSTimer *timer;
@@ -65,7 +65,7 @@ static const CGFloat kAddressHeight = 26.0f;
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
     self.interstitial = nil;
     if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
                                                       target:self
                                                     selector:@selector(showAdv)
                                                     userInfo:nil
@@ -95,7 +95,7 @@ static const CGFloat kAddressHeight = 26.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
                                      target:self
                                    selector:@selector(showAdv)
                                    userInfo:nil
