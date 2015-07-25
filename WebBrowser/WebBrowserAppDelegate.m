@@ -43,9 +43,7 @@
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
-    
-    [[UIApplication sharedApplication]setStatusBarHidden:NO];
-    
+    [application setStatusBarHidden:YES];
     // Override point for customization after application launch.
      
     self.window.rootViewController = self.viewController;

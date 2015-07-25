@@ -60,6 +60,7 @@ static const CGFloat kAddressHeight = 26.0f;
     // Release any cached data, images, etc that aren't in use.
 }
 
+
 #pragma mark Display-Time Lifecycle Notifications
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
