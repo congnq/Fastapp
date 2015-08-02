@@ -20,18 +20,22 @@
 
 #import "WebBrowserViewController.h"
 #import <GoogleMobileAds/GoogleMobileAds.h>
+#import "AFNetworking/AFNetworking.h"
+#import "MBProgressHUD.h"
+
+
+
+
 #define PopupTime 10.0
+#define currentURL @"http://autohungthinh.com/"
+#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_off.txt"
+
+
 @interface WebBrowserViewController () <GADInterstitialDelegate>
 @property(nonatomic, strong) GADInterstitial *interstitial;
 @property (strong, nonatomic) NSTimer *timer;
 @end
 
-static const CGFloat kNavBarHeight = 52.0f;
-static const CGFloat kLabelHeight = 14.0f;
-static const CGFloat kMargin = 10.0f;
-static const CGFloat kSpacer = 2.0f;
-static const CGFloat kLabelFontSize = 12.0f;
-static const CGFloat kAddressHeight = 26.0f;
 
 @implementation WebBrowserViewController
 @synthesize webView = mWebView;
@@ -43,13 +47,13 @@ static const CGFloat kAddressHeight = 26.0f;
 
 - (void)dealloc
 {
-    [mWebView release];
-    [mToolbar release];
-    [mBack release];
-    [mForward release];
-    [mRefresh release];
-    [mStop release];
-    [super dealloc];
+//    [mWebView release];
+//    [mToolbar release];
+//    [mBack release];
+//    [mForward release];
+//    [mRefresh release];
+//    [mStop release];
+//    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,20 +100,7 @@ static const CGFloat kAddressHeight = 26.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
-                                     target:self
-                                   selector:@selector(showAdv)
-                                   userInfo:nil
-                                    repeats:YES];
     
-    
-
-    
-//    [self.interstitial loadRequest:[GADRequest request]];
-    
-    
-    
-
     
     NSAssert(self.back, @"Unconnected IBOutlet 'back'");
     NSAssert(self.forward, @"Unconnected IBOutlet 'forward'");
@@ -119,12 +110,41 @@ static const CGFloat kAddressHeight = 26.0f;
 
     self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
-    NSURL* url = [NSURL URLWithString:@"http://autohungthinh.com/"];
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];
-    [self.webView loadRequest:request];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:resourceURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        NSString *stringURL = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        [self webViewWillLoadURL:stringURL];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSString *stringURL = currentURL;
+        [self webViewWillLoadURL:stringURL];
+        
+    }];
+    
+    
     [self updateButtons];
 }
 
+
+-(void) webViewWillLoadURL :(NSString *) stringURL {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
+                                                  target:self
+                                                selector:@selector(showAdv)
+                                                userInfo:nil
+                                                 repeats:YES];
+
+    NSURL *url = [NSURL URLWithString:stringURL];
+    if (!url) {
+        url = [NSURL URLWithString:currentURL];
+    }
+    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
+}
 
 - (void)viewDidUnload
 {
@@ -200,6 +220,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self updateButtons];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
