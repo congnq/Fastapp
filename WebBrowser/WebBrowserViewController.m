@@ -101,7 +101,7 @@
 {
     [super viewDidLoad];
     
-    
+    [self updateBottomBarWithParam:NO];
     NSAssert(self.back, @"Unconnected IBOutlet 'back'");
     NSAssert(self.forward, @"Unconnected IBOutlet 'forward'");
     NSAssert(self.refresh, @"Unconnected IBOutlet 'refresh'");
@@ -124,6 +124,8 @@
         NSString *stringURL = currentURL;
         if (!jsonError) {
             stringURL = [json objectForKey:@"url"];
+            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
+            [self updateBottomBarWithParam:showBottomBarValue.boolValue];
         }
         
         [self webViewWillLoadURL:stringURL];
@@ -138,6 +140,18 @@
     [self updateButtons];
 }
 
+
+-(void) updateBottomBarWithParam :(BOOL) isShow {
+    self.toolbar.hidden = isShow;
+    
+    if (!isShow) {
+        self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
+        
+    } else {
+        self.webView.frame = self.view.frame;
+        
+    }
+}
 
 -(void) webViewWillLoadURL :(NSString *) stringURL {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime

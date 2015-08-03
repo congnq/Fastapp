@@ -40,7 +40,8 @@
 		30BE148813874E890069F164 /* WebBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BE148713874E890069F164 /* WebBrowserAppDelegate.m */; };
 		30BE148B13874E890069F164 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30BE148913874E890069F164 /* MainWindow.xib */; };
 		30BE148E13874E890069F164 /* WebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BE148D13874E890069F164 /* WebBrowserViewController.m */; };
-		30BE149113874E890069F164 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30BE148F13874E890069F164 /* WebBrowserViewController.xib */; };
+		48052B8B1B6FC768002D0052 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48052B891B6FC768002D0052 /* MainWindow.xib */; };
+		48052B8C1B6FC768002D0052 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48052B8A1B6FC768002D0052 /* WebBrowserViewController.xib */; };
 		488F5FE31B6E5DB9006B13D9 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FD11B6E5DB9006B13D9 /* AFHTTPRequestOperation.m */; };
 		488F5FE41B6E5DB9006B13D9 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FD31B6E5DB9006B13D9 /* AFHTTPRequestOperationManager.m */; };
 		488F5FE51B6E5DB9006B13D9 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FD51B6E5DB9006B13D9 /* AFHTTPSessionManager.m */; };
@@ -92,7 +93,8 @@
 		30BE148A13874E890069F164 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		30BE148C13874E890069F164 /* WebBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebBrowserViewController.h; sourceTree = "<group>"; };
 		30BE148D13874E890069F164 /* WebBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebBrowserViewController.m; sourceTree = "<group>"; };
-		30BE149013874E890069F164 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WebBrowserViewController.xib; sourceTree = "<group>"; };
+		48052B891B6FC768002D0052 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		48052B8A1B6FC768002D0052 /* WebBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebBrowserViewController.xib; path = "xib-flies/WebBrowserViewController.xib"; sourceTree = "<group>"; };
 		488F5FD01B6E5DB9006B13D9 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		488F5FD11B6E5DB9006B13D9 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		488F5FD21B6E5DB9006B13D9 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -207,6 +209,8 @@
 		30BE147D13874E890069F164 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				48052B8A1B6FC768002D0052 /* WebBrowserViewController.xib */,
+				48052B881B6FC768002D0052 /* xib-flies */,
 				488F5FEC1B6E5E66006B13D9 /* MBProgressHUD.h */,
 				488F5FED1B6E5E66006B13D9 /* MBProgressHUD.m */,
 				488F5FCF1B6E5DB9006B13D9 /* AFNetworking */,
@@ -215,7 +219,6 @@
 				30BE148913874E890069F164 /* MainWindow.xib */,
 				30BE148C13874E890069F164 /* WebBrowserViewController.h */,
 				30BE148D13874E890069F164 /* WebBrowserViewController.m */,
-				30BE148F13874E890069F164 /* WebBrowserViewController.xib */,
 				30BE147E13874E890069F164 /* Supporting Files */,
 			);
 			path = WebBrowser;
@@ -230,6 +233,14 @@
 				30BE148413874E890069F164 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		48052B881B6FC768002D0052 /* xib-flies */ = {
+			isa = PBXGroup;
+			children = (
+				48052B891B6FC768002D0052 /* MainWindow.xib */,
+			);
+			path = "xib-flies";
 			sourceTree = "<group>";
 		};
 		488F5FCF1B6E5DB9006B13D9 /* AFNetworking */ = {
@@ -314,12 +325,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48052B8B1B6FC768002D0052 /* MainWindow.xib in Resources */,
 				30BE148213874E890069F164 /* InfoPlist.strings in Resources */,
 				1AB30600182C237B000ED7B1 /* Default-568h@2x.png in Resources */,
 				1A236C9F1B0FA4CB005B6262 /* Images.xcassets in Resources */,
 				30BE148B13874E890069F164 /* MainWindow.xib in Resources */,
 				1A236CA11B0FB535005B6262 /* AppIcon60x60@2x.png in Resources */,
-				30BE149113874E890069F164 /* WebBrowserViewController.xib in Resources */,
+				48052B8C1B6FC768002D0052 /* WebBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,14 +375,6 @@
 				30BE148A13874E890069F164 /* en */,
 			);
 			name = MainWindow.xib;
-			sourceTree = "<group>";
-		};
-		30BE148F13874E890069F164 /* WebBrowserViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				30BE149013874E890069F164 /* en */,
-			);
-			name = WebBrowserViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
