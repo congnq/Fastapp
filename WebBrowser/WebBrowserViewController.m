@@ -47,13 +47,13 @@
 
 - (void)dealloc
 {
-//    [mWebView release];
-//    [mToolbar release];
-//    [mBack release];
-//    [mForward release];
-//    [mRefresh release];
-//    [mStop release];
-//    [super dealloc];
+    //    [mWebView release];
+    //    [mToolbar release];
+    //    [mBack release];
+    //    [mForward release];
+    //    [mRefresh release];
+    //    [mStop release];
+    //    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,7 +76,7 @@
                                                     userInfo:nil
                                                      repeats:YES];
     }
-
+    
     
 }
 
@@ -107,17 +107,25 @@
     NSAssert(self.refresh, @"Unconnected IBOutlet 'refresh'");
     NSAssert(self.stop, @"Unconnected IBOutlet 'stop'");
     NSAssert(self.webView, @"Unconnected IBOutlet 'webView'");
-
+    
     self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-   
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:resourceURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        NSString *stringURL = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSError *jsonError;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&jsonError];
+        
+        NSString *stringURL = currentURL;
+        if (!jsonError) {
+            stringURL = [json objectForKey:@"url"];
+        }
+        
         [self webViewWillLoadURL:stringURL];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -137,7 +145,7 @@
                                                 selector:@selector(showAdv)
                                                 userInfo:nil
                                                  repeats:YES];
-
+    
     NSURL *url = [NSURL URLWithString:stringURL];
     if (!url) {
         url = [NSURL URLWithString:currentURL];
@@ -179,9 +187,9 @@
 // MARK: -
 // MARK: UIWebViewDelegate protocol
 /**
- * \brief 
+ * \brief
  *
- * This is called for more than just the toplevel page so is not ideal for 
+ * This is called for more than just the toplevel page so is not ideal for
  * updating the loading URL.
  *
  * \param navigationType is one of:
