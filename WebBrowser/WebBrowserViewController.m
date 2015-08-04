@@ -28,7 +28,7 @@
 
 #define PopupTime 10.0
 #define currentURL @"http://autohungthinh.com/"
-#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_off.txt"
+#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_bottombar_true"
 
 
 @interface WebBrowserViewController () <GADInterstitialDelegate>
@@ -142,12 +142,13 @@
 
 
 -(void) updateBottomBarWithParam :(BOOL) isShow {
-    self.toolbar.hidden = isShow;
+    self.toolbar.hidden = !isShow;
     
-    if (!isShow) {
+    if (isShow) {
         self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
         
     } else {
+        
         self.webView.frame = self.view.frame;
         
     }
