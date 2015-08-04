@@ -33,6 +33,7 @@
 @interface WebBrowserViewController () <GADInterstitialDelegate>
 @property(nonatomic, strong) GADInterstitial *interstitial;
 @property (strong, nonatomic) NSTimer *timer;
+@property (assign,nonatomic) NSInteger timeInterval;
 @end
 
 
@@ -68,8 +69,8 @@
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
     self.interstitial = nil;
-    if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
+    if (!self.timer && _timeInterval != 0) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:_timeInterval
                                                       target:self
                                                     selector:@selector(showAdv)
                                                     userInfo:nil
@@ -130,7 +131,9 @@
             
             [self updateBottomBarWithParam:showBottomBarValue.boolValue fullScreen:fullScreenValue.boolValue];
         }
-        [self displayPopupWithTime:time.integerValue];
+        
+        _timeInterval = time.integerValue;
+        [self displayPopupWithTime:_timeInterval];
         [self webViewWillLoadURL:stringURL];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -160,15 +163,20 @@
 }
 
 -(void) displayPopupWithTime :(NSInteger) time {
-    BOOL repeat = YES;
     if (time == 0) {
-        repeat = NO;
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:time
+                                                      target:self
+                                                    selector:@selector(showAdv)
+                                                    userInfo:nil
+                                                     repeats:NO];
+    } else {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:time
+                                                      target:self
+                                                    selector:@selector(showAdv)
+                                                    userInfo:nil
+                                                     repeats:YES];
     }
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:time
-                                                  target:self
-                                                selector:@selector(showAdv)
-                                                userInfo:nil
-                                                 repeats:repeat];
+
 }
 
 
