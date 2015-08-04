@@ -26,9 +26,8 @@
 
 
 
-#define PopupTime 10.0
 #define currentURL @"http://autohungthinh.com/"
-#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_bottombar_true"
+#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_fullscreen_true"
 
 
 @interface WebBrowserViewController () <GADInterstitialDelegate>
@@ -101,7 +100,7 @@
 {
     [super viewDidLoad];
     
-    [self updateBottomBarWithParam:NO];
+    [self updateBottomBarWithParam:NO fullScreen:NO];
     NSAssert(self.back, @"Unconnected IBOutlet 'back'");
     NSAssert(self.forward, @"Unconnected IBOutlet 'forward'");
     NSAssert(self.refresh, @"Unconnected IBOutlet 'refresh'");
@@ -122,12 +121,16 @@
                                                                error:&jsonError];
         
         NSString *stringURL = currentURL;
+        NSNumber *time = [NSNumber numberWithInt:0];
         if (!jsonError) {
             stringURL = [json objectForKey:@"url"];
             NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
-            [self updateBottomBarWithParam:showBottomBarValue.boolValue];
+            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
+            time = [json objectForKey:@"adsinterval"];
+            
+            [self updateBottomBarWithParam:showBottomBarValue.boolValue fullScreen:fullScreenValue.boolValue];
         }
-        
+        [self displayPopupWithTime:time.integerValue];
         [self webViewWillLoadURL:stringURL];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -141,25 +144,36 @@
 }
 
 
--(void) updateBottomBarWithParam :(BOOL) isShow {
-    self.toolbar.hidden = !isShow;
-    
-    if (isShow) {
-        self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
+-(void) updateBottomBarWithParam :(BOOL) isShow fullScreen :(BOOL) fullScreen  {
+    if (!fullScreen) {
+        self.toolbar.hidden = !isShow;
         
-    } else {
-        
-        self.webView.frame = self.view.frame;
-        
+        if (isShow) {
+            self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
+            
+        } else {
+            
+            self.webView.frame = self.view.frame;
+            
+        }
     }
 }
 
--(void) webViewWillLoadURL :(NSString *) stringURL {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:PopupTime
+-(void) displayPopupWithTime :(NSInteger) time {
+    BOOL repeat = YES;
+    if (time == 0) {
+        repeat = NO;
+    }
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:time
                                                   target:self
                                                 selector:@selector(showAdv)
                                                 userInfo:nil
-                                                 repeats:YES];
+                                                 repeats:repeat];
+}
+
+
+-(void) webViewWillLoadURL :(NSString *) stringURL {
+    
     
     NSURL *url = [NSURL URLWithString:stringURL];
     if (!url) {
