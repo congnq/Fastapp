@@ -27,13 +27,14 @@
 
 
 #define currentURL @"http://autohungthinh.com/"
-#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test_fullscreen_true"
+#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test"
 
 
 @interface WebBrowserViewController () <GADInterstitialDelegate>
 @property(nonatomic, strong) GADInterstitial *interstitial;
 @property (strong, nonatomic) NSTimer *timer;
 @property (assign,nonatomic) NSInteger timeInterval;
+@property (assign, nonatomic) BOOL enableZoom;
 @end
 
 
@@ -94,12 +95,22 @@
     
 }
 #pragma mark - View lifecycle
-
+- (UIView *) viewForZoomingInScrollView:(UIScrollView *) scrollView
+{
+    if (self.enableZoom) {
+        return [self.webView viewForZoomingInScrollView:scrollView];
+    } else {
+        return nil;    
+    }
+    
+}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.enableZoom = NO;
+    self.webView.scrollView.delegate = self;
     
     [self updateBottomBarWithParam:NO fullScreen:NO];
     NSAssert(self.back, @"Unconnected IBOutlet 'back'");
@@ -109,7 +120,6 @@
     NSAssert(self.webView, @"Unconnected IBOutlet 'webView'");
     
     self.webView.delegate = self;
-    self.webView.scalesPageToFit = YES;
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
@@ -128,6 +138,10 @@
             NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
             NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
             time = [json objectForKey:@"adsinterval"];
+            
+            NSNumber *zoomValue = [json objectForKey:@"resize"];
+            self.enableZoom = zoomValue.boolValue;
+
             
             [self updateBottomBarWithParam:showBottomBarValue.boolValue fullScreen:fullScreenValue.boolValue];
         }

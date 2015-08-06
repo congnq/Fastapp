@@ -21,7 +21,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface WebBrowserViewController : UIViewController<UIWebViewDelegate> {
+@interface WebBrowserViewController : UIViewController<UIWebViewDelegate,UIScrollViewDelegate> {
     UIWebView* mWebView;
     UIToolbar* mToolbar;
     UIBarButtonItem* mBack;
