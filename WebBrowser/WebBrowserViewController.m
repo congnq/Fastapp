@@ -135,8 +135,11 @@
         NSNumber *time = [NSNumber numberWithInt:0];
         if (!jsonError) {
             stringURL = [json objectForKey:@"url"];
-            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
-            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
+//            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
+//            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
+            
+            NSNumber *showBottomBarValue = [NSNumber numberWithBool:NO];
+            NSNumber *fullScreenValue  = [NSNumber numberWithBool:YES];
             time = [json objectForKey:@"adsinterval"];
             NSNumber *zoomValue = [json objectForKey:@"resize"];
             self.enableZoom = zoomValue.boolValue;
@@ -160,19 +163,17 @@
 }
 
 
--(void) updateBottomBarWithParam :(BOOL) isShow fullScreen :(BOOL) fullScreen  {
+-(void) updateBottomBarWithParam :(BOOL) showButtonBar fullScreen :(BOOL) fullScreen  {
     
     if (fullScreen) {
         self.toolbar.hidden = YES;
         self.webView.frame = self.view.frame;
     } else {
-        self.toolbar.hidden = !isShow;
-        self.webView.frame = self.view.frame;
-        if (isShow) {
+        if (showButtonBar) {
             self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
-            
+            self.toolbar.hidden = NO;
         } else {
-            
+            self.toolbar.hidden = YES;
             self.webView.frame = self.view.frame;
             
         }
