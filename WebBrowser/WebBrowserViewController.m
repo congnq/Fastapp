@@ -112,7 +112,7 @@
     self.enableZoom = NO;
     self.webView.scrollView.delegate = self;
     
-    [self updateBottomBarWithParam:NO fullScreen:NO];
+//    [self updateBottomBarWithParam:NO fullScreen:NO];
     NSAssert(self.back, @"Unconnected IBOutlet 'back'");
     NSAssert(self.forward, @"Unconnected IBOutlet 'forward'");
     NSAssert(self.refresh, @"Unconnected IBOutlet 'refresh'");
@@ -135,11 +135,11 @@
         NSNumber *time = [NSNumber numberWithInt:0];
         if (!jsonError) {
             stringURL = [json objectForKey:@"url"];
-//            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
-//            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
+            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
+            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
             
-            NSNumber *showBottomBarValue = [NSNumber numberWithBool:NO];
-            NSNumber *fullScreenValue  = [NSNumber numberWithBool:YES];
+//            NSNumber *showBottomBarValue = [NSNumber numberWithBool:NO];
+//            NSNumber *fullScreenValue  = [NSNumber numberWithBool:NO];
             time = [json objectForKey:@"adsinterval"];
             NSNumber *zoomValue = [json objectForKey:@"resize"];
             self.enableZoom = zoomValue.boolValue;
@@ -169,12 +169,16 @@
         self.toolbar.hidden = YES;
         self.webView.frame = self.view.frame;
     } else {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
         if (showButtonBar) {
-            self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
+            self.webView.frame = CGRectMake(0, 22, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height - 22);
             self.toolbar.hidden = NO;
         } else {
             self.toolbar.hidden = YES;
-            self.webView.frame = self.view.frame;
+            CGRect frame = self.view.frame;
+            frame.size.height = frame.size.height - 22;
+            frame.origin.y = 22;
+            self.webView.frame = frame;
             
         }
         
