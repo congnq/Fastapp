@@ -138,7 +138,6 @@
             NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
             NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
             time = [json objectForKey:@"adsinterval"];
-            
             NSNumber *zoomValue = [json objectForKey:@"resize"];
             self.enableZoom = zoomValue.boolValue;
 
@@ -164,6 +163,9 @@
 -(void) updateBottomBarWithParam :(BOOL) isShow fullScreen :(BOOL) fullScreen  {
     
     if (fullScreen) {
+        self.toolbar.hidden = YES;
+        self.webView.frame = self.view.frame;
+    } else {
         self.toolbar.hidden = !isShow;
         self.webView.frame = self.view.frame;
         if (isShow) {
@@ -174,9 +176,7 @@
             self.webView.frame = self.view.frame;
             
         }
-    } else {
-        self.toolbar.hidden = YES;
-        self.webView.frame = self.view.frame;
+        
 
     }
 }
