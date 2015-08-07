@@ -135,14 +135,10 @@
         NSNumber *time = [NSNumber numberWithInt:0];
         if (!jsonError) {
             stringURL = [json objectForKey:@"url"];
-//            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
-//            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
-            
-            NSNumber *showBottomBarValue = [NSNumber numberWithBool:NO];
-            NSNumber *fullScreenValue  = [NSNumber numberWithBool:NO];
+            NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
+            NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
             time = [json objectForKey:@"adsinterval"];
             NSNumber *zoomValue = [json objectForKey:@"resize"];
-//            NSNumber *zoomValue = [NSNumber numberWithBool:NO];
             self.enableZoom = zoomValue.boolValue;
 
             
@@ -164,7 +160,9 @@
 }
 
 
+
 -(void) updateBottomBarWithParam :(BOOL) showButtonBar fullScreen :(BOOL) fullScreen  {
+  
     
     if (fullScreen) {
         self.toolbar.hidden = YES;
