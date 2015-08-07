@@ -162,9 +162,10 @@
 
 
 -(void) updateBottomBarWithParam :(BOOL) isShow fullScreen :(BOOL) fullScreen  {
-    if (!fullScreen) {
+    
+    if (fullScreen) {
         self.toolbar.hidden = !isShow;
-        
+        self.webView.frame = self.view.frame;
         if (isShow) {
             self.webView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.toolbar.frame.size.height);
             
@@ -173,6 +174,10 @@
             self.webView.frame = self.view.frame;
             
         }
+    } else {
+        self.toolbar.hidden = YES;
+        self.webView.frame = self.view.frame;
+
     }
 }
 
