@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A236C9F1B0FA4CB005B6262 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A236C9E1B0FA4CB005B6262 /* Images.xcassets */; };
-		1A236CA11B0FB535005B6262 /* AppIcon60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A236CA01B0FB535005B6262 /* AppIcon60x60@2x.png */; };
 		1AA44E171B15DD860046C63D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E161B15DD860046C63D /* AudioToolbox.framework */; };
 		1AA44E191B15DD8B0046C63D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E181B15DD8B0046C63D /* CFNetwork.framework */; };
 		1AA44E1B1B15DD910046C63D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E1A1B15DD910046C63D /* CoreLocation.framework */; };
@@ -23,7 +22,6 @@
 		1AA44E2D1B15DDE90046C63D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E2C1B15DDE90046C63D /* Social.framework */; };
 		1AA44E2F1B15DE2D0046C63D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E2E1B15DE2D0046C63D /* Parse.framework */; };
 		1AA44E311B15DEA20046C63D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA44E301B15DEA20046C63D /* Bolts.framework */; };
-		1AB30600182C237B000ED7B1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AB305FF182C237B000ED7B1 /* Default-568h@2x.png */; };
 		1AF3427C1B31C775004C0A82 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF3427B1B31C775004C0A82 /* AdSupport.framework */; };
 		1AF3427E1B31C77F004C0A82 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF3427D1B31C77F004C0A82 /* AVFoundation.framework */; };
 		1AF342801B31C787004C0A82 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF3427F1B31C787004C0A82 /* CoreMedia.framework */; };
@@ -56,7 +54,6 @@
 
 /* Begin PBXFileReference section */
 		1A236C9E1B0FA4CB005B6262 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Web2App/Images.xcassets; sourceTree = "<group>"; };
-		1A236CA01B0FB535005B6262 /* AppIcon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon60x60@2x.png"; sourceTree = "<group>"; };
 		1AA44E161B15DD860046C63D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1AA44E181B15DD8B0046C63D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1AA44E1A1B15DD910046C63D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -71,7 +68,6 @@
 		1AA44E2C1B15DDE90046C63D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		1AA44E2E1B15DE2D0046C63D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		1AA44E301B15DEA20046C63D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		1AB305FF182C237B000ED7B1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1AF3427B1B31C775004C0A82 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		1AF3427D1B31C77F004C0A82 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1AF3427F1B31C787004C0A82 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -158,8 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				1A236C9E1B0FA4CB005B6262 /* Images.xcassets */,
-				1A236CA01B0FB535005B6262 /* AppIcon60x60@2x.png */,
-				1AB305FF182C237B000ED7B1 /* Default-568h@2x.png */,
 				30BE147D13874E890069F164 /* WebBrowser */,
 				30BE147613874E890069F164 /* Frameworks */,
 				30BE147413874E890069F164 /* Products */,
@@ -327,10 +321,8 @@
 			files = (
 				48052B8B1B6FC768002D0052 /* MainWindow.xib in Resources */,
 				30BE148213874E890069F164 /* InfoPlist.strings in Resources */,
-				1AB30600182C237B000ED7B1 /* Default-568h@2x.png in Resources */,
 				1A236C9F1B0FA4CB005B6262 /* Images.xcassets in Resources */,
 				30BE148B13874E890069F164 /* MainWindow.xib in Resources */,
-				1A236CA11B0FB535005B6262 /* AppIcon60x60@2x.png in Resources */,
 				48052B8C1B6FC768002D0052 /* WebBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
