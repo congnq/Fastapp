@@ -50,6 +50,8 @@
 		488F5FEA1B6E5DB9006B13D9 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FE01B6E5DB9006B13D9 /* AFURLResponseSerialization.m */; };
 		488F5FEB1B6E5DB9006B13D9 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FE21B6E5DB9006B13D9 /* AFURLSessionManager.m */; };
 		488F5FEE1B6E5E66006B13D9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 488F5FED1B6E5E66006B13D9 /* MBProgressHUD.m */; };
+		48D180601B863A1C00230AE6 /* FAInputURLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D1805F1B863A1C00230AE6 /* FAInputURLView.m */; };
+		48D180621B863A3A00230AE6 /* FAInputURLView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48D180611B863A3A00230AE6 /* FAInputURLView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +114,9 @@
 		488F5FE21B6E5DB9006B13D9 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		488F5FEC1B6E5E66006B13D9 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		488F5FED1B6E5E66006B13D9 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		48D1805E1B863A1C00230AE6 /* FAInputURLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAInputURLView.h; sourceTree = "<group>"; };
+		48D1805F1B863A1C00230AE6 /* FAInputURLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAInputURLView.m; sourceTree = "<group>"; };
+		48D180611B863A3A00230AE6 /* FAInputURLView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FAInputURLView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +208,7 @@
 		30BE147D13874E890069F164 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				48D1805D1B8639FD00230AE6 /* InputURL */,
 				48052B8A1B6FC768002D0052 /* WebBrowserViewController.xib */,
 				48052B881B6FC768002D0052 /* xib-flies */,
 				488F5FEC1B6E5E66006B13D9 /* MBProgressHUD.h */,
@@ -263,6 +269,16 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		48D1805D1B8639FD00230AE6 /* InputURL */ = {
+			isa = PBXGroup;
+			children = (
+				48D1805E1B863A1C00230AE6 /* FAInputURLView.h */,
+				48D1805F1B863A1C00230AE6 /* FAInputURLView.m */,
+				48D180611B863A3A00230AE6 /* FAInputURLView.xib */,
+			);
+			path = InputURL;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -321,6 +337,7 @@
 			files = (
 				48052B8B1B6FC768002D0052 /* MainWindow.xib in Resources */,
 				30BE148213874E890069F164 /* InfoPlist.strings in Resources */,
+				48D180621B863A3A00230AE6 /* FAInputURLView.xib in Resources */,
 				1A236C9F1B0FA4CB005B6262 /* Images.xcassets in Resources */,
 				30BE148B13874E890069F164 /* MainWindow.xib in Resources */,
 				48052B8C1B6FC768002D0052 /* WebBrowserViewController.xib in Resources */,
@@ -346,6 +363,7 @@
 				488F5FEE1B6E5E66006B13D9 /* MBProgressHUD.m in Sources */,
 				488F5FEB1B6E5DB9006B13D9 /* AFURLSessionManager.m in Sources */,
 				30BE148813874E890069F164 /* WebBrowserAppDelegate.m in Sources */,
+				48D180601B863A1C00230AE6 /* FAInputURLView.m in Sources */,
 				30BE148E13874E890069F164 /* WebBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,19 +22,25 @@
 #import <GoogleMobileAds/GoogleMobileAds.h>
 #import "AFNetworking/AFNetworking.h"
 #import "MBProgressHUD.h"
-
+#import "FAInputURLView.h"
 
 
 
 #define currentURL @"http://autohungthinh.com/"
-#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/test"
+#define resourceURL @"https://raw.githubusercontent.com/gadote/enablecheck/master/inputurl_true"
 
 
-@interface WebBrowserViewController () <GADInterstitialDelegate>
+@interface WebBrowserViewController () <GADInterstitialDelegate> {
+    BOOL  visible;
+    BOOL shouldUseInputURL;
+}
 @property(nonatomic, strong) GADInterstitial *interstitial;
 @property (strong, nonatomic) NSTimer *timer;
 @property (assign,nonatomic) NSInteger timeInterval;
 @property (assign, nonatomic) BOOL enableZoom;
+@property (strong, nonatomic) FAInputURLView *inputView;
+@property (strong, nonatomic) NSString *stringURL;
+
 @end
 
 
@@ -110,6 +116,9 @@
 {
     [super viewDidLoad];
     self.enableZoom = NO;
+    visible = NO;
+    [self createInputView];
+    
     self.webView.scrollView.delegate = self;
     
 //    [self updateBottomBarWithParam:NO fullScreen:NO];
@@ -122,7 +131,7 @@
     self.webView.delegate = self;
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+    __block typeof(BOOL) useInputURl = shouldUseInputURL;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:resourceURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -131,23 +140,36 @@
                                                              options:NSJSONReadingMutableContainers
                                                                error:&jsonError];
         
-        NSString *stringURL = currentURL;
+        self.stringURL = currentURL;
+        
         NSNumber *time = [NSNumber numberWithInt:0];
         if (!jsonError) {
-            stringURL = [json objectForKey:@"url"];
+            
+            
+            self.stringURL = [json objectForKey:@"url"];
             NSNumber *showBottomBarValue = [json objectForKey:@"enabledbottombar"];
             NSNumber *fullScreenValue  = [json objectForKey:@"fullscreen"];
             time = [json objectForKey:@"adsinterval"];
             NSNumber *zoomValue = [json objectForKey:@"resize"];
             self.enableZoom = zoomValue.boolValue;
-
+            useInputURl = ((NSNumber *)[json objectForKey:@"inputurl"]).boolValue;
             
+
             [self updateBottomBarWithParam:showBottomBarValue.boolValue fullScreen:fullScreenValue.boolValue];
         }
         
+        
         _timeInterval = time.integerValue;
         [self displayPopupWithTime:_timeInterval];
-        [self webViewWillLoadURL:stringURL];
+       [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if (!useInputURl) {
+            [self webViewWillLoadURL:self.stringURL];
+        } else {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            visible = YES;
+            [self displayView];
+        }
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *stringURL = currentURL;
@@ -159,8 +181,74 @@
     [self updateButtons];
 }
 
+#pragma mark - FAInputURLView 
 
 
+
+-(void) createInputView {
+    self.inputView = [[[NSBundle mainBundle] loadNibNamed:@"FAInputURLView" owner:self options:nil] objectAtIndex:0];
+    
+    __block typeof(self) selfBlock = self;
+    self.inputView.goBlock = ^(NSString *text){
+
+        
+        [selfBlock loadInputURL:text];
+
+    };
+    
+    self.inputView.cancelBlock = ^{
+        [selfBlock cancelClicked];
+    };
+    
+    self.inputView.frame = self.view.frame;
+    [self.view addSubview:self.inputView];
+    [self.view sendSubviewToBack:self.inputView];
+}
+
+-(void) loadInputURL :(NSString *) url {
+    [self webViewWillLoadURL:url];
+    [self displayView];
+    
+}
+
+-(void) cancelClicked  {
+    [self displayView];
+    [MBProgressHUD hideHUDForView:self.view  animated:YES];
+    [self webViewWillLoadURL:self.stringURL];
+}
+
+-(void) displayView  {
+    
+    if (visible) {
+        [self.view bringSubviewToFront:self.inputView];
+        [UIView animateWithDuration:0.75 delay:0.0 options:nil
+                         animations:^{
+                            
+                             self.inputView.backgroundView.alpha = 0.5;
+                         }
+                         completion:^(BOOL finish)
+         {
+             [self.view bringSubviewToFront:self.inputView];
+             visible = NO;
+         }
+         ];
+        
+    } else {
+        
+        [UIView animateWithDuration:0.5 delay:0.0 options:nil
+                         animations:^{
+                             self.inputView.backgroundView.alpha = 0.0;
+                         }
+                         completion:^(BOOL finish)
+         {
+                 [self.view sendSubviewToBack:self.inputView];
+                 visible = YES;
+             
+         }
+         ];
+    }
+}
+#pragma mark - Load Setting Function
 -(void) updateBottomBarWithParam :(BOOL) showButtonBar fullScreen :(BOOL) fullScreen  {
   
     
@@ -205,7 +293,7 @@
 
 -(void) webViewWillLoadURL :(NSString *) stringURL {
     
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSURL *url = [NSURL URLWithString:stringURL];
     if (!url) {
         url = [NSURL URLWithString:currentURL];
@@ -294,6 +382,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [self updateButtons];
 }
 
