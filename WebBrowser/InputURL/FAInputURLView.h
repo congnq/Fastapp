@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *goButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 @property (nonatomic, copy) void (^goBlock)(id value);
 
 @property (nonatomic, copy) void (^cancelBlock)();
